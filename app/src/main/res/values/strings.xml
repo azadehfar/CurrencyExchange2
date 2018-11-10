@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name"></string>
+    <string name="action_settings">تنظیمات</string>
+    <string name="TabTitleB">ارز</string>
+    <string name="TabTitleA">دلار</string>
+    <string name="Fragment1Title">ارز</string>
+    <string name="Fragment2Title">طلا</string>
+    <string name="Fragment3Title">تبدیل</string>
+    <string name="exchange">Exchange</string>
+</resources>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background7"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="5dp">
+
+
+
+
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
+             android:text="From"
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/currency_from"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:prompt="@string/exchange"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:textSize="14sp"
+            android:theme="@style/Spinner">
+
+        </android.support.v7.widget.AppCompatSpinner>
+
+        <com.aldoapps.autoformatedittext.AutoFormatEditText
+            android:id="@+id/amount"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textCursorDrawable="@null"
+            android:gravity="center"
+                android:inputType="number"
+            android:textColor="@color/textcolor"
+            android:maxLength="10"
+            android:paddingLeft="5dp"
+            android:text="1"
+            android:textSize="23sp"
+            app:isDecimal="true" />
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/btndown"
+        android:text="Downloaad"
+        android:textColor="@android:color/white"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_default"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp"/>
+
+
+    <ImageView
+        android:id="@+id/reload"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/exchange3" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:padding="1dp">
+
+
+
+        <com.aldoapps.autoformatedittext.AutoFormatEditText
+            android:id="@+id/result"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+        android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:textCursorDrawable="@null"
+            android:gravity="center"
+
+            android:inputType="number"
+            android:textColor="@color/textcolor"
+            android:maxLength="10"
+            android:paddingLeft="5dp"
+            android:text="14650"
+            android:textSize="23sp"
+
+            />
+
+
+    <!--       <org.fabiomsr.moneytextview.MoneyTextView
+              android:id="@+id/result"
+              android:layout_width="150dp"
+              android:layout_height="40dp"
+              android:layout_alignParentLeft="true"
+              android:layout_marginLeft="5dp"
+               android:alpha="0.4"
+              android:background="@drawable/button_background5"
+              android:hint="0"
+              android:paddingLeft="5dp"
+              app:amount="0"
+              app:baseTextColor="@color/textcolor"
+              app:baseTextSize="20sp"
+              app:decimalDigitsTextSize="15sp"
+              app:decimalMargin="2dp"
+              app:format="###,###,###,###,###"
+              app:includeDecimalSeparator="false"
+              app:symbol="$"
+              app:symbolGravity="start|top"
+              app:symbolMargin="5dp"
+              app:symbolTextSize="13sp" />
+     -->
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:layout_marginLeft="5dp"
+            android:text="To"
+            />
+
+          <android.support.v7.widget.AppCompatSpinner
+              android:id="@+id/currency_to"
+              android:layout_width="150dp"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:gravity="left"
+              android:prompt="@string/exchange"
+              android:spinnerMode="dropdown"
+              android:textSize="14sp"
+              android:theme="@style/Spinner">
+
+
+          </android.support.v7.widget.AppCompatSpinner>
+
+
+
+
+
+
+
+      </RelativeLayout>
+
+
+
+    <TextView
+        android:id="@+id/currencymessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:textColor="@color/textcolor"
+        android:textSize="10sp"
+        android:text="1 USD = 4200 IRR"
+        />
+
+
+
+
+
+
+
+      <!--  <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    -->
+
+
+
+
+
+
+
+
+
+</LinearLayout>
