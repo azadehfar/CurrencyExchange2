@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 
         import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import android.os.Bundle;
@@ -53,6 +55,9 @@ import org.fabiomsr.moneytextview.MoneyTextView;
 import java.util.ArrayList;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import es.dmoral.toasty.Toasty;
+
+import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_STATIC_DP;
 
 
 public class ChangeFragment extends Fragment{
@@ -65,7 +70,6 @@ public class ChangeFragment extends Fragment{
     TextView currencymessage;
     View MoneyFragmentView ;
     Spinner currency_from , currency_to;
-    ImageView reload;
     CircularProgressButton circularProgressButton;
 
     public ChangeFragment() {
@@ -152,25 +156,23 @@ public class ChangeFragment extends Fragment{
         });
 
 
-     //   CircularProgressButton btn = (CircularProgressButton) MoneyFragmentView.findViewById(R.id.btn_id);
-     //   btn.startAnimation();
 
-/*        reload.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        Button button = MoneyFragmentView.findViewById( R.id.reload2 );
+        PushDownAnim.setPushDownAnimTo( button )
+                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
+                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
+                .setScale( MODE_STATIC_DP, 15  )
+                .setOnClickListener( new View.OnClickListener(){
             @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                //Agrega porcentajes de cada fraccion de grafica pastel
+            public void onClick( View view ){
+                Toasty.info(getContext(), "Calculated!", Toast.LENGTH_SHORT, true).show();
+            }
 
-                Animation animFadein = AnimationUtils.loadAnimation(MoneyFragmentView.getContext(), R.anim.fade_in);
-
-                reload.startAnimation(animFadein);
-
-            }});*/
-
-
-
-
-
+        } );
 
 
 
@@ -254,7 +256,7 @@ public class ChangeFragment extends Fragment{
          result = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.result);
         amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
          currencymessage = (TextView) MoneyFragmentView.findViewById(R.id.currencymessage);
-        reload = (ImageView) MoneyFragmentView.findViewById(R.id.reload);
+
 
     }
 

@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     @ViewById
-    TextView datetitle,updatemessage;
+    TextView datetitle,updatemessage, updatemessage2;
 
     @ViewById
     SwipeRefreshLayout swipeLayout;
@@ -214,7 +214,7 @@ void init(){
             @Override
             public void onIdleButtonClick(View view) {
                 // called when download button/icon is clicked
-                new Thread(new SampleTask(new Handler(), btn, updatemessage)).start();
+                new Thread(new SampleTask(new Handler(), btn, updatemessage2)).start();
                 btn.setIdle();
                 updatemessage.setText("اطلاعات بروز می باشد");
             }

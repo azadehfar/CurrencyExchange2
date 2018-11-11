@@ -67,56 +67,82 @@
 
 
 
+            <!--      <TextView
+                    android:id="@+id/updatemessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|center_horizontal"
+                    android:paddingTop="5dp"
+                    android:text="آخرین بروزرسانی: 2 ساعت پیش"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />  -->
+
+                <com.hanks.htextview.scale.ScaleTextView
+                    android:id="@+id/updatemessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="آخرین بروزرسانی: 2 ساعت پیش"
+                    android:paddingTop="5dp"
+                    android:gravity="top|center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+            />
+
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@color/material_white" />
+
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/colorPrimaryDark"
+                    />
+
+
+            </LinearLayout>
+
+
+            <com.github.abdularis.buttonprogress.DownloadButtonProgress
+                android:id="@+id/button_reload"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                app:idleIconDrawable="@drawable/ic_download"
+                app:cancelIconDrawable="@drawable/ic_cancel"
+                app:progressIndeterminateColor="#828282"
+                app:progressDeterminateColor="#04b169"
+                app:finishIconDrawable="@drawable/ic_finish"
+
+       />
+
+
+
             <TextView
-                android:id="@+id/updatemessage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|center_horizontal"
+                android:id="@+id/updatemessage2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:paddingTop="5dp"
-                android:text="آخرین بروزرسانی: 2 ساعت پیش"
+                android:text="Reload Status"
                 android:textColor="@color/white"
-                android:textSize="10sp" />
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabTextColor="@color/material_white" />
-
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-android:background="@color/colorPrimaryDark"
+                android:textSize="10sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
                 />
 
-
-        </LinearLayout>
-
-
-        <com.github.abdularis.buttonprogress.DownloadButtonProgress
-            android:id="@+id/button_reload"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            app:idleIconDrawable="@drawable/ic_download"
-            app:cancelIconDrawable="@drawable/ic_cancel"
-            app:progressIndeterminateColor="#828282"
-            app:progressDeterminateColor="#04b169"
-            app:finishIconDrawable="@drawable/ic_finish"
-
-   />
-
-    </RelativeLayout>
+        </RelativeLayout>
 
 
 
 
-</android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
