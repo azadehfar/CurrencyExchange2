@@ -54,13 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textCursorDrawable="@null"
+            android:cursorVisible="false"
             android:gravity="center"
                 android:inputType="number"
             android:textColor="@color/textcolor"
-            android:maxLength="10"
+            android:maxLength="15"
             android:paddingLeft="5dp"
             android:text="1"
-            android:textSize="23sp"
+            android:textSize="25sp"
             app:isDecimal="true" />
 
 
@@ -99,18 +100,20 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-        android:focusable="true"
+            android:focusable="false"
             android:focusableInTouchMode="false"
             android:textCursorDrawable="@null"
             android:gravity="center"
-
             android:inputType="number"
             android:textColor="@color/textcolor"
-            android:maxLength="10"
+            android:maxLength="20"
             android:paddingLeft="5dp"
             android:text="14650"
-            android:textSize="23sp"
-
+            android:textSize="25sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="23sp"
+            app:autoSizeStepGranularity="2sp"
             />
 
 

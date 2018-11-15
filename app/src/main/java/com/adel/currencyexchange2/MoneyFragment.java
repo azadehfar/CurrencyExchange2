@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -34,8 +35,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.mateware.snacky.Snacky;
+import es.dmoral.toasty.Toasty;
+
+import static com.adel.currencyexchange2.Gen.closeKeyboard;
 
 
 public class MoneyFragment extends Fragment{
@@ -44,6 +49,7 @@ public class MoneyFragment extends Fragment{
     ArrayList<MoneyDataModel> dataModels;
     ListView listView;
     private static MoneyAdapter adapter;
+    Contract.Presentation presentation = new Presentation();
 
     public MoneyFragment() {
         // Required empty public constructor
@@ -66,13 +72,10 @@ public class MoneyFragment extends Fragment{
        View MoneyFragmentView = inflater.inflate(R.layout.money_fragment, container, false);
 
         listView=(ListView)MoneyFragmentView.findViewById(R.id.list);
-        dataModels= new ArrayList<>();
-        dataModels.add(new MoneyDataModel("113000", "دلار کانادا", "100 تومان افزایش قیمت",1));
-        dataModels.add(new MoneyDataModel("126500", "دلار امریکا", "بدون تغییر",0));
-        dataModels.add(new MoneyDataModel("143600", "یورو", "200 تومان افزایش قیمت",1));
-        dataModels.add(new MoneyDataModel("12600", "لیر ترکیه", "10 تومان کاهش قیمت",-1));
-        dataModels.add(new MoneyDataModel("15000", "درهم امارات", "بدون تغییر",0));
-        adapter= new MoneyAdapter(dataModels,MoneyFragmentView.getContext());
+
+
+
+        adapter= new MoneyAdapter(Gen.MoneydataModels,MoneyFragmentView.getContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,39 +83,30 @@ public class MoneyFragment extends Fragment{
 
                 MoneyDataModel  dataModel= dataModels.get(position);
 
-             //   Snackbar.make(view, dataModel.getTitle()+"\n"+dataModel.getCommentl()+" API: "+dataModel.getValue(), Snackbar.LENGTH_LONG)
-               //        .setAction("No action", null).show();
+
 
                 String mes = dataModel.getTitle()+"\n"+dataModel.getCommentl();
                 if (dataModel.getProcess() == 1)
-                   Snacky.builder()
-                        .setView(view)
-                        .setText(mes)
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();
-                else if (dataModel.getProcess() == 0)
-                    Snacky.builder()
-                            .setView(view)
-                            .setText(mes)
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .build()
-                            .show();
-                else
-                    Snacky.builder()
-                            .setView(view)
-                            .setText(mes)
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .error()
-                            .show();
 
+                Gen.ShowSuccess(view,null, mes );
+
+                else if (dataModel.getProcess() == 0)
+
+                   Gen.ShowInfo(view,null, mes );
+                else
+
+                    Gen.ShowError(view,null, mes );
 
             }
         });
 
 
+
+
         return MoneyFragmentView ;
     }
+
+
 
 }
 

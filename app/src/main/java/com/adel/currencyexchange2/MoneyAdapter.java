@@ -51,8 +51,9 @@ public class MoneyAdapter extends ArrayAdapter<MoneyDataModel> implements View.O
         switch (v.getId())
         {
             case R.id.list:
-                Snackbar.make(v, "Release date " +dataModel.getTitle(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
+            /*    Snackbar.make(v, "Release date " +dataModel.getTitle(), Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();*/
+                Gen.ShowInfo(v,null, "Release date " +dataModel.getTitle() );
                 break;
         }
     }

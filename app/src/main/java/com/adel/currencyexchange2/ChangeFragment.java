@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -55,6 +56,7 @@ import org.fabiomsr.moneytextview.MoneyTextView;
 import java.util.ArrayList;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
 import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_STATIC_DP;
@@ -104,12 +106,7 @@ public class ChangeFragment extends Fragment{
         bind(MoneyFragmentView);
 
 
-   //      Spinner currency_from = (Spinner)  MoneyFragmentView.findViewById(R.id.currency_from);
-     //   Spinner currency_to = (Spinner)  MoneyFragmentView.findViewById(R.id.currency_to);
-     //   AutoFormatEditText result = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.result);
-    //     amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
-    //    result = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.result);
-     //   currencymessage = (TextView) MoneyFragmentView.findViewById(R.id.currencymessage);
+
       initiatCurrencyLOV();
 
         SpinnerAdapter adapter = new SpinnerAdapter (getActivity()  , R.layout.spinner_layout , R.id.txt , list );
@@ -129,18 +126,17 @@ public class ChangeFragment extends Fragment{
 
 
 
-        showKeyboard();
+      //  Gen.showKeyboard(getActivity());
 
-
-
+      //  Toasty.info(get, Toast.LENGTH_SHORT, true).show();
 
 
         amount.addTextChangedListener(new TextWatcher() {
-
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
 
-            }
+            resetTextSize();
+     }
 
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
@@ -155,8 +151,21 @@ public class ChangeFragment extends Fragment{
             }
         });
 
+      /*  amount.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                amount.setCursorVisible(true);
+                 Snacky.builder()
+                        .setView(view)
+                        .setText("تبدیل شد")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .info()
+                        .show();
 
-
+                return false;
+            }
+        });
+*/
 
 
 
@@ -169,7 +178,9 @@ public class ChangeFragment extends Fragment{
                 .setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick( View view ){
-                Toasty.info(getContext(), "Calculated!", Toast.LENGTH_SHORT, true).show();
+
+                ReloadResult();
+
             }
 
         } );
@@ -206,6 +217,14 @@ public class ChangeFragment extends Fragment{
     }
 
 
+ /*   public void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public void showKeyboard() {
 
 
@@ -220,7 +239,7 @@ public class ChangeFragment extends Fragment{
         );
 
     }
-
+*/
     @Override
     public void onResume() {
 
@@ -260,40 +279,33 @@ public class ChangeFragment extends Fragment{
 
     }
 
+
+    private void resetTextSize () {
+
+
+        if (result.getText().toString().length() > 19)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        if (result.getText().toString().length() > 14)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        else if (result.getText().toString().length() > 10)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        else
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+
+
+        if (amount.getText().toString().length() > 19)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        if (amount.getText().toString().length() > 14)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        else if (amount.getText().toString().length() > 10)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        else
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+
+
+    }
+
+
+
 }
 
-/*public class ChangeFragment extends Fragment {
-
-    private static final String KEY_PARAM = "key_param";
-
-    public static ChangeFragment newInstance(String param) {
-        ChangeFragment f = new ChangeFragment();
-        f.setArguments(arguments(param));
-        return f;
-    }
-
-    public static Bundle arguments(String param) {
-        return new Bundler()
-                .putString(KEY_PARAM, param)
-                .get();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.change_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        String param = getArguments().getString(KEY_PARAM);
-
-        //   TextView pageText = (TextView) view.findViewById(R.id.page_text);
-        //   pageText.setText(param);
-
-    }
-
-}
-*/

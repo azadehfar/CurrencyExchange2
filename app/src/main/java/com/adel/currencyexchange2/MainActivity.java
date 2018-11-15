@@ -10,7 +10,13 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
+import com.yy.mobile.rollingtextview.RollingTextView;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.ComponentName;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -18,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -34,6 +41,7 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,15 +63,19 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import es.dmoral.toasty.Toasty;
 
 
 @EActivity (R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Contract.View{
 
 
 
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MoneyDataModel> dataModels;
     static MoneyAdapter adapter;
     final ArrayList<SpinnerItemData> list = new ArrayList<>();
+    Contract.Presentation presentation = new Presentation();
 
     private int[] tabIcons = {
             R.drawable.dollar3,
@@ -82,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-//@ViewById
-//DotsIndicator dotsIndicator;
 
     @ViewById
     Toolbar toolbar;
@@ -96,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     @ViewById
-    TextView datetitle,updatemessage, updatemessage2;
+    TextView datetitle, updatemessage2 , updatemessage;
 
     @ViewById
     SwipeRefreshLayout swipeLayout;
@@ -104,38 +115,33 @@ public class MainActivity extends AppCompatActivity {
     Spinner currencyy;
     CircularProgressButton circularProgressButton;
     DownloadButtonProgress btn;
-  //  Spinner currency_too;
-//    @ViewById
-  //  Spinner currency_from, currency_to;
 
- //   @ViewById
-  //  ListView listView;
-
- //   @ViewById
- //   static MoneyAdapter adapter;
 
 
 
 
 
     @AfterViews
-void init(){
+void init() {
+
+     //   getSupportActionBar().hide();
+        presentation.AttachView(this);
+        ReloadResult();
 
 
-
-      //swipeLayout = findViewById(R.id.swipeContainer);
+        //Swipe Reload Data
             swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code here
-                Toast.makeText(getApplicationContext(), "Works!", Toast.LENGTH_LONG).show();
+
                 // To keep animation for 4 seconds
+                ReloadResult();
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
-                }, 2000); // Delay in millis
+                }, 1000); // Delay in millis
             }
         });
         swipeLayout.setColorSchemeColors(
@@ -149,28 +155,18 @@ void init(){
 
 
 
-  //      toolbar = (Toolbar) findViewById(R.id.toolbar);
-  //      setSupportActionBar(toolbar);
-  //      toolbar.setBackgroundColor(Color.BLACK);
 
 
-
-      //  viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
 
-     //   tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         viewPager.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setupTabIcons();
 
-     //   dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
-     //   dotsIndicator.setViewPager(viewPager);
 
-       // datetitle = (TextView) findViewById(R.id.datetitle);
-        datetitle.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
-     //   updatemessage =  (TextView) findViewById(R.id.updatemessage);
+       datetitle.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
         updatemessage.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
 
 
@@ -188,35 +184,20 @@ void init(){
 
 
 
-  //  ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-   // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
- //   ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,    android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-//    BetterSpinner currencyy = (BetterSpinner)  findViewById(R.id.currencyy);
- //   Spinner currencyy = (Spinner) findViewById(R.id.currencyy);
-//    currencyy.setAdapter(dataAdapter);
-
-
-
-
-    //    currency_to.setAdapter(adapter);
-//    currency_from.setSelection(1); //USD
-  //  currency_to.setSelection(0); //IRR
-
-
 
 
 
 
 
          btn = findViewById(R.id.button_reload);
-
-        btn.addOnClickListener(new DownloadButtonProgress.OnClickListener() {
+         btn.addOnClickListener(new DownloadButtonProgress.OnClickListener() {
             @Override
             public void onIdleButtonClick(View view) {
-                // called when download button/icon is clicked
+
+                ReloadResult();
                 new Thread(new SampleTask(new Handler(), btn, updatemessage2)).start();
                 btn.setIdle();
-                updatemessage.setText("اطلاعات بروز می باشد");
+            //    updatemessage.setText(getResources().getString(R.string.dataisupdate));
             }
 
             @Override
@@ -228,7 +209,32 @@ void init(){
             public void onFinishButtonClick(View view) {
                 // called when finish button/icon is clicked
                 btn.setIdle();
-                updatemessage.setText("اطلاعات بروز می باشد");
+                updatemessage.setText(getResources().getString(R.string.dataisupdate));
+            }
+        });
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+
+
+                if (position!=2)
+                   Gen.closeKeyboard(Gen.getRunningActivity());
+                else
+                   Gen.showKeyboard(Gen.getRunningActivity());
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+
             }
         });
 
@@ -236,10 +242,9 @@ void init(){
 
 
 
-
-
-
     }
+
+
 
 
     private void setupTabIcons() {
@@ -273,6 +278,19 @@ void init(){
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onShowResult() {
+        Gen.ShowSuccess(getCurrentFocus(),null,getResources().getString(R.string.currencyisupdate));
+        updatemessage.setText(getResources().getString(R.string.dataisupdate));
+    }
+
+    @Override
+    public void onFailureResult() {
+        Gen.ShowError(getCurrentFocus(),null,getResources().getString(R.string.updatefailed));
+        updatemessage.setText(getResources().getString(R.string.updatefailed));
+
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -304,7 +322,7 @@ void init(){
 
     private void ReloadResult() {
 
-
+     presentation.getResult();
 
 
     }

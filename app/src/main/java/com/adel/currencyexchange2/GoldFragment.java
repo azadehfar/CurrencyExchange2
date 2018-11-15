@@ -29,10 +29,12 @@ import android.widget.TextView;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import de.mateware.snacky.Snacky;
+import es.dmoral.toasty.Toasty;
 
 import static com.adel.currencyexchange2.MainActivity.adapter;
 
@@ -57,18 +59,19 @@ public class GoldFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View MoneyFragmentView = inflater.inflate(R.layout.gold_fragment, container, false);
+        View GoldFragmentView = inflater.inflate(R.layout.gold_fragment, container, false);
 
-        listView=(ListView)MoneyFragmentView.findViewById(R.id.listg);
-        dataModels= new ArrayList<>();
+        listView=(ListView)GoldFragmentView.findViewById(R.id.listg);
+
+      /*  dataModels= new ArrayList<>();
         dataModels.add(new MoneyDataModel("424100", "گرم طلای 18", "100 تومان افزایش قیمت",1));
         dataModels.add(new MoneyDataModel("565460", "گرم طلای 24", "بدون تغییر",0));
         dataModels.add(new MoneyDataModel("4400000", "سکه بهار آزادی", "200 تومان افزایش قیمت",1));
         dataModels.add(new MoneyDataModel("4610000", "سکه امامی", "10 تومان کاهش قیمت",-1));
         dataModels.add(new MoneyDataModel("2350000", "نیم سکه", "بدون تغییر",0));
         dataModels.add(new MoneyDataModel("1175000", "ربع سکه", "بدون تغییر",0));
-        dataModels.add(new MoneyDataModel("680000", "سکه گرمی", "بدون تغییر",0));
-        adapter= new MoneyAdapter(dataModels,MoneyFragmentView.getContext());
+        dataModels.add(new MoneyDataModel("680000", "سکه گرمی", "بدون تغییر",0));*/
+        adapter= new MoneyAdapter(Gen.GolddataModels,GoldFragmentView.getContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,33 +84,39 @@ public class GoldFragment extends Fragment{
 
                 String mes = dataModel.getTitle()+"\n"+dataModel.getCommentl();
                 if (dataModel.getProcess() == 1)
-                    Snacky.builder()
+                    /*Snacky.builder()
                             .setView(view)
                             .setText(mes)
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
-                            .show();
+                            .show();*/
+                    Gen.ShowSuccess(view,null, mes );
                 else if (dataModel.getProcess() == 0)
-                    Snacky.builder()
+                   /* Snacky.builder()
                             .setView(view)
                             .setText(mes)
                             .setDuration(Snacky.LENGTH_SHORT)
                             .build()
-                            .show();
+                            .show();*/
+                    Gen.ShowInfo(view,null, mes );
                 else
-                    Snacky.builder()
+                  /*  Snacky.builder()
                             .setView(view)
                             .setText(mes)
                             .setDuration(Snacky.LENGTH_SHORT)
                             .error()
-                            .show();
-
+                            .show();*/
+                Gen.ShowError(view,null, mes );
 
             }
         });
 
 
-        return MoneyFragmentView ;
+     //   Gen.closeKeyboard(getActivity());
+    //    Toasty.info(getContext(), "test2", Toast.LENGTH_SHORT, true).show();
+
+
+        return GoldFragmentView ;
     }
 
 }

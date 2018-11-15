@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">Currency</string>
     <string name="action_settings">تنظیمات</string>
     <string name="TabTitleB">ارز</string>
     <string name="TabTitleA">دلار</string>
     <string name="Fragment1Title">ارز</string>
     <string name="Fragment2Title">طلا</string>
     <string name="Fragment3Title">تبدیل</string>
+    <string name="dataisupdate">نرخ های تبدیل بروز می باشد</string>
+    <string name="updatefailed">خطا در بروز رسانی اطلاعات</string>
+    <string name="currencyisupdate">نرخ های تبدیل بروز شد</string>
+    <string name="convertedrate">تبدیل نرخ انجام شد</string>
+
     <string name="exchange">Exchange</string>
 </resources>
