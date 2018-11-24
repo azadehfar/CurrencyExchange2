@@ -1,12 +1,15 @@
 package com.adel.currencyexchange2;
 
+import com.adel.currencyexchange2.utils.BaseActivity;
+import com.aldoapps.autoformatedittext.AutoFormatEditText;
+
 import com.github.abdularis.buttonprogress.DownloadButtonProgress;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+//import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+//import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+//import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+//import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
@@ -17,6 +20,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -32,6 +36,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +54,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -65,17 +71,25 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import es.dmoral.toasty.Toasty;
+//import eu.long1.spacetablayout.SpaceTabLayout;
+import saman.zamani.persiandate.PersianDate;
+import saman.zamani.persiandate.PersianDateFormat;
+
+
 
 
 @EActivity (R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements Contract.View{
+public class MainActivity extends BaseActivity implements Contract.View{
 
 
 
@@ -102,31 +116,41 @@ public class MainActivity extends AppCompatActivity implements Contract.View{
 
     @ViewById
     TabLayout tabLayout;
+  //  SpaceTabLayout tabLayout;
 
     @ViewById
     ViewPager viewPager;
 
     @ViewById
-    TextView datetitle, updatemessage2 , updatemessage;
+    TextView datetitle,  updatemessage ,updatemessage2;
 
-    @ViewById
-    SwipeRefreshLayout swipeLayout;
+  @ViewById
+   SwipeRefreshLayout swipeLayout;
 
     Spinner currencyy;
     CircularProgressButton circularProgressButton;
-    DownloadButtonProgress btn;
+    DownloadButtonProgress Reloadbtn;
 
 
-
+    AutoFormatEditText amount ;
 
 
 
     @AfterViews
 void init() {
 
+
+
      //   getSupportActionBar().hide();
         presentation.AttachView(this);
         ReloadResult();
+        SetCalendartitle();
+        SetUpdatetitle();
+        setupViewPager(viewPager , mBundle);
+        //Gen.ShowInfo(null, mActivity,"tessst");
+
+
+
 
 
         //Swipe Reload Data
@@ -157,17 +181,10 @@ void init() {
 
 
 
-        setupViewPager(viewPager);
-
-
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        viewPager.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        setupTabIcons();
 
 
        datetitle.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
-        updatemessage.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
+       updatemessage.setTypeface(Typeface.createFromAsset(getAssets(),Gen.GeneralTextForn));
 
 
 
@@ -186,19 +203,15 @@ void init() {
 
 
 
-
-
-
-         btn = findViewById(R.id.button_reload);
-         btn.addOnClickListener(new DownloadButtonProgress.OnClickListener() {
+        Reloadbtn = findViewById(R.id.button_reload);
+        Reloadbtn.addOnClickListener(new DownloadButtonProgress.OnClickListener() {
             @Override
             public void onIdleButtonClick(View view) {
 
                 ReloadResult();
-                new Thread(new SampleTask(new Handler(), btn, updatemessage2)).start();
-                btn.setIdle();
-            //    updatemessage.setText(getResources().getString(R.string.dataisupdate));
-            }
+                new Thread(new SampleTask(new Handler(), Reloadbtn, updatemessage2)).start();
+                Reloadbtn.setIdle();
+                 }
 
             @Override
             public void onCancelButtonClick(View view) {
@@ -208,22 +221,42 @@ void init() {
             @Override
             public void onFinishButtonClick(View view) {
                 // called when finish button/icon is clicked
-                btn.setIdle();
-                updatemessage.setText(getResources().getString(R.string.dataisupdate));
+                Reloadbtn.setIdle();
+              //  updatemessage.setText(getResources().getString(R.string.dataisupdate));
             }
         });
 
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+
+
+       tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-
-
-                if (position!=2)
+              if (position!=2)  // !Convert Rate
                    Gen.closeKeyboard(Gen.getRunningActivity());
-                else
-                   Gen.showKeyboard(Gen.getRunningActivity());
+                else {
+                  Gen.showKeyboard(Gen.getRunningActivity());
+
+
+                 // final AutoFormatEditText
+                          amount  = (AutoFormatEditText) findViewById(R.id.amount);
+                 if (amount!= null ) {
+                     amount.requestFocus();
+                     amount.post(new Runnable() {
+                         @Override
+                         public void run() {
+                             amount.requestFocus();
+                             InputMethodManager imgr = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                             imgr.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT);
+                         }
+                     });
+                 }
+
+                }
+
+       //     Gen.ShowInfo(null, mActivity , "open");
 
             }
 
@@ -253,12 +286,50 @@ void init() {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    private void setupViewPager(ViewPager viewPager , Bundle savedInstanceState) {
+
+       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new MoneyFragment(),getResources().getString(R.string.Fragment1Title));
         adapter.addFrag(new GoldFragment(), getResources().getString(R.string.Fragment2Title));
         adapter.addFrag(new ChangeFragment(), getResources().getString(R.string.Fragment3Title));
         viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        viewPager.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+ setupTabIcons();
+
+/*
+        List<Fragment> fragmentList = new ArrayList<>();
+        fragmentList.add(new MoneyFragment());
+        fragmentList.add(new GoldFragment());
+        fragmentList.add(new ChangeFragment());
+
+        ViewPager viewPager2 = (ViewPager) findViewById(R.id.viewPager);
+        //tabLayout = (SpaceTabLayout) findViewById(R.id.tabLayout);
+
+        //we need the savedInstanceState to get the position
+        tabLayout.initialize(viewPager2, getSupportFragmentManager(),    fragmentList,  savedInstanceState   );
+
+
+
+        tabLayout.setTabOneOnClickListener(new View.OnClickListener() {
+            @Override
+            public   void onClick(View v) {
+               Gen.ShowInfo(v, null , "Welcome to SpaceTabLayout");
+
+            }
+        });
+
+        tabLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gen.ShowInfo(v, null , "Welcome to SpaceTabLayout22");
+            }
+        });
+        */
+
+
+
     }
 
 
@@ -281,7 +352,11 @@ void init() {
     @Override
     public void onShowResult() {
         Gen.ShowSuccess(getCurrentFocus(),null,getResources().getString(R.string.currencyisupdate));
-        updatemessage.setText(getResources().getString(R.string.dataisupdate));
+        //updatemessage.setText(getResources().getString(R.string.dataisupdate));
+
+        Gen.LastupdatedDate = new Date();
+        SetUpdatetitle();
+
     }
 
     @Override
@@ -323,10 +398,83 @@ void init() {
     private void ReloadResult() {
 
      presentation.getResult();
+     ReloadPagesResult();
+
+    }
+
+
+
+    private void SetCalendartitle()
+    {
+       //https://github.com/samanzamani/PersianDate
+        PersianDate pdate = new PersianDate();
+        PersianDateFormat pdformater = new PersianDateFormat();
+        pdformater.format(pdate);
+        TextView datetitle = (TextView) findViewById(R.id.datetitle);
+        datetitle.setText(pdate.dayName()+" "+pdate.getShDay()+" " +pdate.monthName()+" "+getResources().getString(R.string.monthname)+" "+pdate.getShYear());
+
+    }
+
+
+    private void SetUpdatetitle () {
+
+
+        if ( Gen.LastupdatedDate==null)
+        {
+            updatemessage.setText( getResources().getString(R.string.dataisnotupdate) );
+            return;
+        }
+
+            updatemessage.setText(getResources().getString(R.string.lastupdate) +" "  +Gen.DifferentDatesDuration(Gen.LastupdatedDate) + getResources().getString(R.string.lastupdatep)  );
+
+
+
+    }
+
+    private void ReloadPagesResult() {
+
+     //  MoneyFragment fragment = (MoneyFragment) getSupportFragmentManager().findFragmentById(R.id.list);
+     //   MoneyFragment fragment = (MoneyFragment) getSupportFragmentManager().findFragmentByTag("ارز");
+       //       if(fragment != null)
+    //  getSupportFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
+    //    transactFragment(fragment,true);
+
+
+   //   setupViewPager(viewPager);
+
+
+
+    }
+
+    public void transactFragment(Fragment fragment, boolean reload) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        if (reload) {
+            getSupportFragmentManager().popBackStack();
+        }
+        transaction.replace(R.id.list, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        SetUpdatetitle ();
+        SetCalendartitle();
+
+
 
 
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+     //   tabLayout.saveState(outState);
+        super.onSaveInstanceState(outState);
+    }
 
 }

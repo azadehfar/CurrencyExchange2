@@ -88,7 +88,7 @@
             android:textColor="@color/material_white"
             android:gravity="end"
             android:layout_marginEnd="35dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/tabinternal"
             android:hint="0"
             android:layout_alignParentEnd="true"
             app:baseTextColor="@color/material_white"

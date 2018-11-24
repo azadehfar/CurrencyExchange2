@@ -15,12 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-        import com.ogaclejapan.smarttablayout.SmartTabLayout;
-        import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+   //     import com.ogaclejapan.smarttablayout.SmartTabLayout;
+    //   import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 
 
-        import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+      //  import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 
         import android.os.Bundle;
         import android.support.annotation.Nullable;
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
+import static com.adel.currencyexchange2.Gen.GolddataModels;
 import static com.adel.currencyexchange2.MainActivity.adapter;
 
 
@@ -63,60 +64,40 @@ public class GoldFragment extends Fragment{
 
         listView=(ListView)GoldFragmentView.findViewById(R.id.listg);
 
-      /*  dataModels= new ArrayList<>();
-        dataModels.add(new MoneyDataModel("424100", "گرم طلای 18", "100 تومان افزایش قیمت",1));
-        dataModels.add(new MoneyDataModel("565460", "گرم طلای 24", "بدون تغییر",0));
-        dataModels.add(new MoneyDataModel("4400000", "سکه بهار آزادی", "200 تومان افزایش قیمت",1));
-        dataModels.add(new MoneyDataModel("4610000", "سکه امامی", "10 تومان کاهش قیمت",-1));
-        dataModels.add(new MoneyDataModel("2350000", "نیم سکه", "بدون تغییر",0));
-        dataModels.add(new MoneyDataModel("1175000", "ربع سکه", "بدون تغییر",0));
-        dataModels.add(new MoneyDataModel("680000", "سکه گرمی", "بدون تغییر",0));*/
-        adapter= new MoneyAdapter(Gen.GolddataModels,GoldFragmentView.getContext());
+
+        adapter= new MoneyAdapter(GolddataModels,GoldFragmentView.getContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                MoneyDataModel  dataModel= dataModels.get(position);
 
-                //   Snackbar.make(view, dataModel.getTitle()+"\n"+dataModel.getCommentl()+" API: "+dataModel.getValue(), Snackbar.LENGTH_LONG)
-                //        .setAction("No action", null).show();
+                String mes = GolddataModels.get(position).getTitle()+"\n"+GolddataModels.get(position).getCommentl();
+                if (GolddataModels.get(position).getProcess() == 1)
 
-                String mes = dataModel.getTitle()+"\n"+dataModel.getCommentl();
-                if (dataModel.getProcess() == 1)
-                    /*Snacky.builder()
-                            .setView(view)
-                            .setText(mes)
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .success()
-                            .show();*/
                     Gen.ShowSuccess(view,null, mes );
-                else if (dataModel.getProcess() == 0)
-                   /* Snacky.builder()
-                            .setView(view)
-                            .setText(mes)
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .build()
-                            .show();*/
+                else if (GolddataModels.get(position).getProcess() == 0)
+
                     Gen.ShowInfo(view,null, mes );
                 else
-                  /*  Snacky.builder()
-                            .setView(view)
-                            .setText(mes)
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .error()
-                            .show();*/
+
                 Gen.ShowError(view,null, mes );
 
             }
         });
 
 
-     //   Gen.closeKeyboard(getActivity());
-    //    Toasty.info(getContext(), "test2", Toast.LENGTH_SHORT, true).show();
-
-
         return GoldFragmentView ;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
+        }
     }
 
 }

@@ -4,198 +4,205 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background7"
+    android:background="#000"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="2dp"
     tools:context=".MainActivity">
-
-
-
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="85dp"
         android:layout_marginTop="20dp"
+        android:focusableInTouchMode="true"
         android:padding="5dp">
 
 
 
-
-
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:gravity="left"
-            android:layout_marginLeft="5dp"
-            android:textSize="15sp"
-             android:text="From"
-            />
+        <!--          <TextView
+                  android:layout_width="50dp"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:gravity="left"
+                  android:layout_marginLeft="5dp"
+                  android:textColor="#ffffff"
+                  android:textSize="12sp"
+                   android:text="از نرخ"
+                  />
+                  -->
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/currency_from"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical|center_horizontal"
             android:prompt="@string/exchange"
             android:spinnerMode="dropdown"
-            android:layout_alignParentLeft="true"
-            android:gravity="left"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:theme="@style/Spinner">
 
         </android.support.v7.widget.AppCompatSpinner>
 
         <com.aldoapps.autoformatedittext.AutoFormatEditText
             android:id="@+id/amount"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:textCursorDrawable="@null"
+            android:layout_toRightOf="@id/amount"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
             android:cursorVisible="false"
-            android:gravity="center"
-                android:inputType="number"
-            android:textColor="@color/textcolor"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="number"
             android:maxLength="15"
             android:paddingLeft="5dp"
             android:text="1"
-            android:textSize="25sp"
+
+            android:textColor="@color/textcolor"
+            android:textCursorDrawable="@null"
+            android:textSize="40sp"
+            android:textStyle="bold"
             app:isDecimal="true" />
-
-
-
-
-
-
 
 
     </RelativeLayout>
 
 
-    <Button
-        android:id="@+id/reload2"
-        android:textColor="@android:color/white"
-        android:layout_centerInParent="true"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:background="@drawable/exchange3"
-    />
+         <Button
+             android:id="@+id/reload2"
+             android:textColor="@android:color/white"
+             android:layout_centerInParent="true"
+             android:layout_width="45dp"
+             android:layout_height="45dp"
+             android:layout_gravity="center"
+             android:layout_marginRight="25dp"
+             android:background="@drawable/exchange3"
+         />
 
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:padding="1dp">
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="87dp"
+             android:layout_alignParentBottom="true"
+             android:layout_marginTop="5dp"
+             android:padding="1dp">
+
+
+             <com.aldoapps.autoformatedittext.AutoFormatEditText
+                 android:id="@+id/result"
+                 android:layout_width="190dp"
+                 android:layout_height="109dp"
+                 android:layout_alignParentRight="true"
+                 android:focusable="false"
+                 android:focusableInTouchMode="false"
+                 android:layout_alignParentTop="true"
+                 android:gravity="center_vertical|center_horizontal"
+                 android:background="@null"
+                 android:inputType="number"
+                 android:maxLength="20"
+
+                 android:text="14650"
+                 android:textColor="#ffd620"
+                 android:textCursorDrawable="@null"
+                 android:textSize="50sp"
+                 app:autoSizeMaxTextSize="23sp"
+                 app:autoSizeMinTextSize="10sp"
+                 app:autoSizeStepGranularity="2sp"
+                 app:autoSizeTextType="uniform" />
+
+
+         <!--       <org.fabiomsr.moneytextview.MoneyTextView
+                   android:id="@+id/result"
+                   android:layout_width="150dp"
+                   android:layout_height="40dp"
+                   android:layout_alignParentLeft="true"
+                   android:layout_marginLeft="5dp"
+                    android:alpha="0.4"
+                   android:background="@drawable/button_background5"
+                   android:hint="0"
+                   android:paddingLeft="5dp"
+                   app:amount="0"
+                   app:baseTextColor="@color/textcolor"
+                   app:baseTextSize="20sp"
+                   app:decimalDigitsTextSize="15sp"
+                   app:decimalMargin="2dp"
+                   app:format="###,###,###,###,###"
+                   app:includeDecimalSeparator="false"
+                   app:symbol="$"
+                   app:symbolGravity="start|top"
+                   app:symbolMargin="5dp"
+                   app:symbolTextSize="13sp" />
+          -->
+    <!--
+         <TextView
+             android:layout_width="50dp"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:gravity="left"
+             android:textColor="#ffffff"
+             android:layout_marginLeft="5dp"
+             android:textSize="12sp"
+             android:text="به نرخ"
+             />
+             -->
+
+           <android.support.v7.widget.AppCompatSpinner
+               android:id="@+id/currency_to"
+               android:layout_width="100dp"
+               android:layout_height="wrap_content"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+                 android:spinnerMode="dropdown"
+               android:gravity="center_vertical|center_horizontal"
+               android:textSize="12sp"
+               android:layout_marginLeft="5dp"
+               android:theme="@style/Spinner">
+
+
+           </android.support.v7.widget.AppCompatSpinner>
 
 
 
-        <com.aldoapps.autoformatedittext.AutoFormatEditText
-            android:id="@+id/result"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textCursorDrawable="@null"
-            android:gravity="center"
-            android:inputType="number"
-            android:textColor="@color/textcolor"
-            android:maxLength="20"
-            android:paddingLeft="5dp"
-            android:text="14650"
-            android:textSize="25sp"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeMaxTextSize="23sp"
-            app:autoSizeStepGranularity="2sp"
-            />
 
 
-    <!--       <org.fabiomsr.moneytextview.MoneyTextView
-              android:id="@+id/result"
-              android:layout_width="150dp"
-              android:layout_height="40dp"
-              android:layout_alignParentLeft="true"
-              android:layout_marginLeft="5dp"
-               android:alpha="0.4"
-              android:background="@drawable/button_background5"
-              android:hint="0"
-              android:paddingLeft="5dp"
-              app:amount="0"
-              app:baseTextColor="@color/textcolor"
-              app:baseTextSize="20sp"
-              app:decimalDigitsTextSize="15sp"
-              app:decimalMargin="2dp"
-              app:format="###,###,###,###,###"
-              app:includeDecimalSeparator="false"
-              app:symbol="$"
-              app:symbolGravity="start|top"
-              app:symbolMargin="5dp"
-              app:symbolTextSize="13sp" />
+
+
+       </RelativeLayout>
+
+
+
+     <TextView
+         android:id="@+id/currencymessage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:gravity="center"
+         android:layout_gravity="center"
+         android:layout_centerInParent="true"
+         android:textColor="@color/textcolor"
+         android:textSize="10sp"
+         android:padding="0dp"
+         android:text="1 USD = 4200 IRR"
+         />
+
+
+
+
+
+
+
+       <!--  <com.jjoe64.graphview.GraphView
+             android:id="@+id/graph"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
      -->
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:gravity="left"
-            android:layout_marginLeft="5dp"
-            android:text="To"
-            />
-
-          <android.support.v7.widget.AppCompatSpinner
-              android:id="@+id/currency_to"
-              android:layout_width="150dp"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:gravity="left"
-              android:prompt="@string/exchange"
-              android:spinnerMode="dropdown"
-              android:textSize="14sp"
-              android:theme="@style/Spinner">
-
-
-          </android.support.v7.widget.AppCompatSpinner>
-
-
-
-
-
-
-
-      </RelativeLayout>
-
-
-
-    <TextView
-        android:id="@+id/currencymessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:textColor="@color/textcolor"
-        android:textSize="10sp"
-        android:text="1 USD = 4200 IRR"
-        />
-
-
-
-
-
-
-
-      <!--  <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    -->
 
 
 

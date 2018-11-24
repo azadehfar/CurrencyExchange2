@@ -2,6 +2,7 @@ package com.adel.currencyexchange2;
 
 
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -32,12 +33,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.aldoapps.autoformatedittext.AutoFormatEditText;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-        import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+
+//import com.ogaclejapan.smarttablayout.SmartTabLayout;
+     //   import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 
 
-        import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+    //    import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
@@ -62,17 +64,18 @@ import es.dmoral.toasty.Toasty;
 import static com.thekhaeng.pushdownanim.PushDownAnim.MODE_STATIC_DP;
 
 
-public class ChangeFragment extends Fragment{
+public class ChangeFragment extends Fragment  implements View.OnClickListener {
 
 
 
     final ArrayList<SpinnerItemData> list = new ArrayList<>();
     final ArrayList<String> listsymbol = new ArrayList<>();
-    AutoFormatEditText amount , result;
+    AutoFormatEditText amount  , result;
     TextView currencymessage;
-    View MoneyFragmentView ;
+    static View MoneyFragmentView ;
     Spinner currency_from , currency_to;
     CircularProgressButton circularProgressButton;
+    int amountOldval=0;
 
     public ChangeFragment() {
         // Required empty public constructor
@@ -105,6 +108,8 @@ public class ChangeFragment extends Fragment{
 
         bind(MoneyFragmentView);
 
+      //  KeyboardDismisser.useWith(this);
+       // Gen.ShowInfo(null,this,"okkkk");
 
 
       initiatCurrencyLOV();
@@ -118,11 +123,14 @@ public class ChangeFragment extends Fragment{
         currency_to.setSelection(0); //IRR
       //  result.setSymbol(listsymbol.get(0));
 
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(),  Gen.GeneralTextForn);
+        init();
+
+        //Typeface font = Typeface.createFromAsset(getContext().getAssets(),  Gen.GeneralTextForn);
 //        viewHolder.title.setTypeface(Typeface.createFromAsset(getContext().getAssets(),Gen.GeneralTextForn));
-        amount.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
-        result.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
-        currencymessage.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+
+  //      amount.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+    //    result.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+      //  currencymessage.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
 
 
 
@@ -131,7 +139,7 @@ public class ChangeFragment extends Fragment{
       //  Toasty.info(get, Toast.LENGTH_SHORT, true).show();
 
 
-        amount.addTextChangedListener(new TextWatcher() {
+   /*     amount.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
 
@@ -170,7 +178,7 @@ public class ChangeFragment extends Fragment{
 
 
 
-        Button button = MoneyFragmentView.findViewById( R.id.reload2 );
+   /*     Button button = MoneyFragmentView.findViewById( R.id.reload2 );
         PushDownAnim.setPushDownAnimTo( button )
                 .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
                 .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
@@ -181,11 +189,15 @@ public class ChangeFragment extends Fragment{
 
                 ReloadResult();
 
+
+
+
+
             }
 
         } );
 
-
+*/
 
 
 
@@ -195,6 +207,61 @@ public class ChangeFragment extends Fragment{
         return MoneyFragmentView;
     }
 
+
+    public  void init () {
+
+
+
+        amount.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+        result.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+        currencymessage.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+
+        amount.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+                resetTextSize();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+                ReloadResult();
+
+
+            }
+        });
+
+
+
+        Button button = MoneyFragmentView.findViewById( R.id.reload2 );
+        PushDownAnim.setPushDownAnimTo( button )
+                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
+                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
+                .setScale( MODE_STATIC_DP, 15  )
+                .setOnClickListener( new View.OnClickListener(){
+                    @Override
+                    public void onClick( View view ){
+
+                        ReloadResult();
+
+
+
+
+
+                    }
+
+                } );
+
+
+        amount.requestFocus();
+
+
+    }
 
     private void initiatCurrencyLOV() {
 
@@ -244,7 +311,33 @@ public class ChangeFragment extends Fragment{
     public void onResume() {
 
 
+//        Gen.showKeyboard(Gen.getRunningActivity());
         super.onResume();
+
+     //  Gen.ShowInfo(MoneyFragmentView,null,"okkkk2");
+        //Open Keyboard and Focus on Amount field
+     //   amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
+     //   amount.requestFocus();
+     //   amount.setTypeface(Typeface.createFromAsset( getContext().getAssets()  ,Gen.GeneralTextForn));
+
+      /*  amount.post(new Runnable() {
+            @Override
+            public void run() {
+                amount.requestFocus();
+                InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imgr.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+        ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(
+                InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY
+        );
+*/
+
+
+     init();
+
+
     }
 
     @Override
@@ -259,7 +352,22 @@ public class ChangeFragment extends Fragment{
 
         bind(MoneyFragmentView);
        try{
-        result.setText( ""+ (Gen.currency_Cache * Long.parseLong(amount.getText().toString().replace(",","")) ));
+        final Long resultt=  Gen.currency_Cache * Long.parseLong(amount.getText().toString().replace(",",""));
+       // result.setText( ""+ (Gen.currency_Cache * Long.parseLong(amount.getText().toString().replace(",","")) ));
+
+           // Result number Change animation
+           ValueAnimator valueAnimator = ValueAnimator.ofInt(amountOldval, resultt.intValue());
+           valueAnimator.setDuration(400);
+           valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+               @Override
+               public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                   result.setText(valueAnimator.getAnimatedValue().toString());
+                //   result.setText(resultt.toString());
+               }
+           });
+           valueAnimator.start();
+           amountOldval= Integer.parseInt(amount.getText().toString().replace(",",""));
+
 
        } catch (Exception e) {
            result.setText("0");
@@ -273,7 +381,8 @@ public class ChangeFragment extends Fragment{
          currency_from = (Spinner)  MoneyFragmentView.findViewById(R.id.currency_from);
          currency_to = (Spinner)  MoneyFragmentView.findViewById(R.id.currency_to);
          result = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.result);
-        amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
+         amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
+        //amount = getamountInstance ();
          currencymessage = (TextView) MoneyFragmentView.findViewById(R.id.currencymessage);
 
 
@@ -282,28 +391,69 @@ public class ChangeFragment extends Fragment{
 
     private void resetTextSize () {
 
-
-        if (result.getText().toString().length() > 19)
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        if (result.getText().toString().length() > 14)
+        if (result.getText().toString().length() > 18)
             result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        else if (result.getText().toString().length() > 10)
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        else if (result.getText().toString().length() > 13)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+        else if (result.getText().toString().length() > 9)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 27);
+        else if (result.getText().toString().length() > 7)
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
         else
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
 
-
-        if (amount.getText().toString().length() > 19)
-            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        if (amount.getText().toString().length() > 14)
+        if (amount.getText().toString().length() > 18)
             amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        else if (amount.getText().toString().length() > 10)
-            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        else if (amount.getText().toString().length() > 13)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+        else if (amount.getText().toString().length() > 9)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 27);
+        else if (amount.getText().toString().length() > 7)
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
         else
-            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
 
 
     }
+
+
+    @Override
+    public void onClick(View view) {
+
+        Gen.ShowInfo(view,null,"okkkk3");
+        //KeyboardDismisser.useWith(this);
+       // Gen.showKeyboard(Gen.getRunningActivity());
+
+        amount.post(new Runnable() {
+            @Override
+            public void run() {
+                amount.requestFocus();
+                InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imgr.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+      ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(
+                InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY
+        );
+
+
+
+
+
+    }
+
+
+ /*  static AutoFormatEditText getamountInstance () {
+
+        if (amount == null)
+            amount = (AutoFormatEditText) MoneyFragmentView.findViewById(R.id.amount);
+
+         return amount;
+
+
+   }
+*/
 
 
 

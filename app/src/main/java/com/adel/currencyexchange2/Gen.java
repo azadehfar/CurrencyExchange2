@@ -1,19 +1,29 @@
 package com.adel.currencyexchange2;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.ArrayMap;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.github.thunder413.datetimeutils.DateTimeUnits;
+import com.github.thunder413.datetimeutils.DateTimeUtils;
+
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 
 import de.mateware.snacky.Snacky;
@@ -24,9 +34,16 @@ public class Gen {
 
     static long currency_Cache = 4200;
     static String currency_from_Cache, currency_to_Cache;
+    static Date LastupdatedDate;
 
     public static ArrayList<MoneyDataModel> MoneydataModels = new ArrayList<>();
     public static ArrayList<MoneyDataModel> GolddataModels = new ArrayList<>();
+
+
+    public static  String ExchangeTiken="987d7de5-b076-4bfa-df64-08d6179c9234";
+    public static String ExchangeURL = "http://core.arzws.com/api/";
+    //http://api.backino.net/nerkhapi/examples.html
+    public static EndPoints endpoints = Generator.createService(EndPoints.class);
 
 
     public static String getFormatedAmount(String amount) {
@@ -159,5 +176,36 @@ public class Gen {
 
 
 
+    public static String DifferentDatesDuration(Date date)
+    {
+        Date currentdate = new Date();
 
-}
+        int diffm = DateTimeUtils.getDateDiff(currentdate,date, DateTimeUnits.MINUTES);
+        int diffh = DateTimeUtils.getDateDiff(currentdate,date, DateTimeUnits.HOURS);
+        int diffd = DateTimeUtils.getDateDiff(currentdate,date, DateTimeUnits.DAYS);
+        int diffs = DateTimeUtils.getDateDiff(currentdate,date, DateTimeUnits.SECONDS);
+
+
+
+        if (diffd > 0 )
+          return  diffd+" روز ";
+        else if (diffh > 0 )
+            return  diffh+" ساعت ";
+        else if (diffm > 0 )
+            return  diffm+" دقیقه ";
+        else
+            return  diffs+" ثانیه ";
+    }
+
+
+ /*   private void getPermission() {
+        if (ContextCompat.checkSelfPermission(mContext,
+                Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(mActivity,
+                    new String[]{Manifest.permission.READ_SMS},
+                    1000);
+        }
+*/
+
+    }

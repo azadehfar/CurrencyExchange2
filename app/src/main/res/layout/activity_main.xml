@@ -1,137 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
-
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/activity_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        >
-
-        <com.github.florent37.arclayout.ArcLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:elevation="5dp"
-            app:arc_cropDirection="cropOutside"
-            app:arc_height="20dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.3"
-                android:background="@color/colorPrimaryDark"
-                android:scaleType="centerCrop" />
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            </FrameLayout>
-
-        </com.github.florent37.arclayout.ArcLayout>
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/swipeLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/colorPrimary"
+  android:orientation="vertical">
 
 
 
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/activity_main2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/diagonalLayout"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            android:padding="20dp">
+      <com.github.florent37.arclayout.ArcLayout
+          android:layout_width="match_parent"
+          android:layout_height="200dp"
+          android:elevation="5dp"
+          app:arc_cropDirection="cropOutside"
+          app:arc_height="20dp">
 
-            <TextView
-                android:id="@+id/datetitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+          <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:alpha="0.3"
+              android:background="@color/colorPrimaryDark"
+              android:scaleType="centerCrop" />
 
-                android:gravity="top|center_horizontal"
-                android:paddingTop="10dp"
-                android:text="شنبه 27 مهرماه 1397"
-                android:textColor="@color/white"
-                android:textSize="25sp" />
+
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+          </FrameLayout>
+
+      </com.github.florent37.arclayout.ArcLayout>
 
 
 
 
-                <TextView
-                    android:id="@+id/updatemessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="top|center_horizontal"
-                    android:paddingTop="5dp"
-                    android:text="آخرین بروزرسانی: 2 ساعت پیش"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/diagonalLayout"
+          android:layout_marginTop="10dp"
+          android:orientation="vertical"
+          android:padding="20dp">
+
+          <TextView
+              android:id="@+id/datetitle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+
+              android:gravity="top|center_horizontal"
+              android:paddingTop="10dp"
+              android:text="شنبه 27 مهرماه 1397"
+              android:textColor="@color/white"
+              android:textSize="25sp" />
+
+
+
+
+              <TextView
+                  android:id="@+id/updatemessage"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="top|center_horizontal"
+                  android:paddingTop="5dp"
+                  android:text="آخرین بروزرسانی: 2 ساعت پیش"
+                  android:textColor="@color/white"
+                  android:textSize="11sp" />
 
 
                 <android.support.design.widget.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="10dp"
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                         app:tabTextColor="@color/material_white"
+                    app:tabIndicatorColor="@color/textcolor2"
                     app:tabGravity="fill"
                     app:tabMode="fixed"
-                    app:tabTextColor="@color/material_white" />
-
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/colorPrimaryDark"
+                    app:tabContentStart="96dp"
                     />
 
 
-            </LinearLayout>
+          <com.github.florent37.shapeofview.shapes.ArcView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:elevation="2dp"
+              app:arc_cropDirection="cropInside"
+              app:shape_arc_height="5dp"
+              app:shape_arc_position="bottom"
+              >
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager"
+                        android:paddingTop="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/tabexternal"
+                        />
+
+          </com.github.florent37.shapeofview.shapes.ArcView>
+
+      <!--         <android.support.v4.view.ViewPager
+                 android:id="@+id/viewPager"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="56dp" />
 
 
-            <com.github.abdularis.buttonprogress.DownloadButtonProgress
-                android:id="@+id/button_reload"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                app:idleIconDrawable="@drawable/ic_download"
-                app:cancelIconDrawable="@drawable/ic_cancel"
-                app:progressIndeterminateColor="#828282"
-                app:progressDeterminateColor="#04b169"
-                app:finishIconDrawable="@drawable/ic_finish"
+             <eu.long1.spacetablayout.SpaceTabLayout
+                 android:id="@+id/tabLayout"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 app:layout_behavior="eu.long1.spacetablayout.SpaceTabLayoutBehavior"
+                 app:number_of_tabs="three"
+                  app:icon_one="@drawable/ic_finish"
+                 app:icon_two="@drawable/design_ic_visibility"
+                 app:icon_three="@drawable/ic_finish"
+                 app:text_one="Action"
+                 app:text_two="Action"
+                 app:text_three="Action"
+                  app:starting_position="one"
+                 app:tab_color="#de6060"
+                 app:button_color="@color/colorAccent"
+                 app:text_color="#61FFFFFF"
 
-       />
-
-
-
-            <TextView
-                android:id="@+id/updatemessage2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:paddingTop="5dp"
-                android:text="Reload Status"
-                android:textColor="@color/white"
-                android:textSize="10sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                />
-
-        </RelativeLayout>
+                 />
+ -->
 
 
+         </LinearLayout>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+                  <com.github.abdularis.buttonprogress.DownloadButtonProgress
+                       android:id="@+id/button_reload"
+                       android:layout_width="64dp"
+                       android:layout_height="64dp"
+                       android:layout_alignParentBottom="true"
+                       android:layout_alignParentEnd="true"
+                       android:layout_marginTop="10dp"
+                       app:idleIconDrawable="@drawable/ic_download"
+                       app:cancelIconDrawable="@drawable/ic_cancel"
+                       app:progressIndeterminateColor="#828282"
+                       app:progressDeterminateColor="#04b169"
+                       app:finishIconDrawable="@drawable/ic_finish"
+
+              />
+
+
+
+                   <TextView
+                       android:id="@+id/updatemessage2"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:paddingTop="5dp"
+                       android:text="Reload Status"
+                       android:textColor="@color/white"
+                       android:textSize="10sp"
+                       android:layout_alignParentBottom="true"
+                       android:layout_alignParentEnd="true"
+                       />
+
+              </RelativeLayout>
+
+
+
+
+          </android.support.v4.widget.SwipeRefreshLayout>

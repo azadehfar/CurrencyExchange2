@@ -3,6 +3,7 @@ package com.adel.currencyexchange2;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aldoapps.autoformatedittext.AutoFormatEditText;
 
@@ -42,18 +44,23 @@ public class MoneyAdapter extends ArrayAdapter<MoneyDataModel> implements View.O
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        int position=(Integer) v.getTag();
+        int position=(Integer) view.getTag();
         Object object= getItem(position);
         MoneyDataModel dataModel=(MoneyDataModel) object;
 
-        switch (v.getId())
+        switch (view.getId())
         {
             case R.id.list:
             /*    Snackbar.make(v, "Release date " +dataModel.getTitle(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();*/
-                Gen.ShowInfo(v,null, "Release date " +dataModel.getTitle() );
+              //  Gen.ShowInfo(view,null, "Release date " +dataModel.getTitle() );
+
+
+
+
+
                 break;
         }
     }

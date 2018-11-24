@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:padding="5dp"
     >
 
@@ -11,8 +12,8 @@
     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
      android:id="@+id/fragrel"
      android:layout_width="match_parent"
-     android:layout_height="78dp"
-     android:background="@color/colorPrimary"
+     android:layout_height="72dp"
+     android:background="@color/tabinternal"
         app:corner_radius="16dp"
      >
 
@@ -88,11 +89,11 @@
  android:textColor="@color/material_white"
     android:gravity="end"
     android:layout_marginEnd="35dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/tabinternal"
     android:hint="0"
     android:layout_alignParentEnd="true"
      app:baseTextColor="@color/material_white"
-     android:textSize="20sp"
+     android:textSize="25sp"
      android:layout_centerVertical="true"
 
     />

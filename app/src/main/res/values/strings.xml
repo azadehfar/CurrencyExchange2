@@ -10,6 +10,13 @@
     <string name="updatefailed">خطا در بروز رسانی اطلاعات</string>
     <string name="currencyisupdate">نرخ های تبدیل بروز شد</string>
     <string name="convertedrate">تبدیل نرخ انجام شد</string>
+    <string name="dataisnotupdate">اطلاعات بروز نمی باشد</string>
+    <string name="lastupdate">آخرین بروزرسانی: </string>
+    <string name="lastupdatep">پیش</string>
+    <string name="monthname">ماه</string>
+
+
+
 
     <string name="exchange">Exchange</string>
 </resources>
